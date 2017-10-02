@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <script type="text/JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  </head>
+ 
+  <body>
+      <style type="text/css">
+body {
+     
+    background-image: url("images/bg.jpg");
+   
+}
+          
+</style>
+       <font face="Bradley Hand ITC" size="6" color = "Antiquewhite">Your good name?</font> <br>
+      <form><input type="text" name="name" maxlength="40"</form><br>
+   <font face="Bradley Hand ITC" size="6" color = "Antiquewhite">So, you want to know me?</font><br><select  id="people"></select><br><br><br>
+          <input type="button" onclick="myfunct()" value="Go.." >
+  </body>
+      
+  <script type="text/JavaScript">
+    //get a reference to the select element
+    var $select = $('#people'); 
+    var url = "https://www.anapioficeandfire.com/api/characters";
+    //request the JSON data and parse into the select element
+        $.getJSON(url+'?', function(data){
+
+          //clear the current content of the select
+          $select.html('');
+
+          //iterate over the data and append a select option
+          $.each(data, function(key, val){ 
+              if (val.name != "")
+                  {
+            $select.append('<option value="' + key+1 + '">' + val.name + '</option>');}
+              else{
+               $select.append('<option value="' + key+1 + '">' + val.aliases[0] + '</option>');  } 
+          })
+        }) 
+                                                        
+    function myfunct()
+         {
+              var selected = document.getElementById("people");
+                                                               
+              var selectId = selected.options[selected.selectedIndex].value;                                              
+                                                             
+                   url = url+'/'+selectId ;     
+         
+          $.getJSON(url, function(data){
+              console.log(data);
+
+         }) 
+         }
+
+   
+  </script>
+     
+
+
+      
+</html>
